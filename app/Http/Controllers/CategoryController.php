@@ -7,60 +7,65 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    // Afficher la liste
-    public function index()
-    {
-        $categories = Category::orderBy('ordre')->get();
-        return view('categories.index', compact('categories'));
-    }
+public function index(Request $request)
+{
+    $search = $request->search;
 
-    // Formulaire creation
+    $categories = Category::when($search, function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        })
+        ->orderBy('order')
+        ->paginate(10);
+
+    return view('categories.index', compact('categories', 'search'));
+}
+
     public function create()
     {
         return view('categories.create');
     }
 
-    // Sauvegarder
     public function store(Request $request)
     {
-        $request->validate([
-            'nom'   => 'required|unique:categories,nom|max:255',
-            'ordre' => 'required|integer',
-            'statut'=> 'required|boolean',
+        $validated = $request->validate([
+            'name' => 'required|unique:categories,name',
+            'order' => 'required|integer|min:0',
+            'status' => 'required|boolean',
         ]);
 
-        Category::create($request->all());
+        Category::create($validated);
 
-        return redirect()->route('categories.index')
-               ->with('success', 'Categorie creee avec succes !');
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Catégorie créée avec succès.');
     }
 
-    // Formulaire modification
     public function edit(Category $category)
     {
         return view('categories.edit', compact('category'));
     }
 
-    // Modifier
     public function update(Request $request, Category $category)
     {
-        $request->validate([
-            'nom'   => 'required|unique:categories,nom,'.$category->id.'|max:255',
-            'ordre' => 'required|integer',
-            'statut'=> 'required|boolean',
+        $validated = $request->validate([
+            'name' => 'required|unique:categories,name,' . $category->id,
+            'order' => 'required|integer|min:0',
+            'status' => 'required|boolean',
         ]);
 
-        $category->update($request->all());
+        $category->update($validated);
 
-        return redirect()->route('categories.index')
-               ->with('success', 'Categorie modifiee avec succes !');
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Catégorie modifiée avec succès.');
     }
 
-    // Supprimer
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('categories.index')
-               ->with('success', 'Categorie supprimee avec succes !');
+
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Catégorie supprimée avec succès.');
     }
 }
