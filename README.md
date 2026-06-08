@@ -43,7 +43,8 @@ bash composer install
 
 ### 3. Configurer l'environnement
 
-bash cp .env.example .env php artisan key:generate 
+- bash cp .env.example .env 
+- php artisan key:generate 
 
 ### 4. Configurer la base de données
 
@@ -51,7 +52,8 @@ Modifier les paramètres de connexion dans le fichier .env.
 
 Puis exécuter :
 
-bash php artisan migrate php artisan db:seed 
+- bash php artisan migrate 
+- php artisan db:seed 
 
 ### 5. Lancer l'application
 
