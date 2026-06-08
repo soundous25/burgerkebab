@@ -1,62 +1,94 @@
-# Burger Kebab — Module Gestion des Categories
+# Burger Kebab — Module Gestion des Catégories
 
 ## Objectif
-Module de gestion des categories de produits pour le restaurant Burger Kebab.
-Permet a un administrateur de gerer les categories du menu.
 
-## Fonctionnalites
-- Afficher la liste des categories
-- Creer une nouvelle categorie
-- Modifier une categorie existante
-- Activer ou desactiver une categorie
-- Supprimer une categorie
+Ce projet a été réalisé dans le cadre de la Mission 001 du projet Burger Kebab.
 
-## Regles metier
-- Le nom est obligatoire
-- Deux categories ne peuvent pas avoir le meme nom
-- Une categorie inactive n'est plus visible dans le menu client
-- L'ordre d'affichage organise les categories dans le menu
+L'objectif est de développer un module permettant à un administrateur de gérer les catégories de produits du restaurant.
 
-## Prerequis
-- PHP 8+
+## Fonctionnalités
+
+- Afficher la liste des catégories
+- Créer une nouvelle catégorie
+- Modifier une catégorie existante
+- Activer ou désactiver une catégorie
+- Supprimer une catégorie
+- Rechercher une catégorie
+- Pagination des résultats
+
+## Règles métier
+
+- Le nom d'une catégorie est obligatoire.
+- Deux catégories ne peuvent pas avoir le même nom.
+- Une catégorie inactive n'est plus visible dans le menu destiné aux clients.
+- L'ordre d'affichage permet d'organiser les catégories dans le menu.
+
+## Prérequis
+
+- PHP 8.2 ou supérieur
 - Composer
-- Laravel 11
--  MySQL
+- Laravel 12
+- MySQL
+- Git
 
 ## Installation
 
 ### 1. Cloner le projet
-git clonehttps://github.com/soundous25/burger_kebab.git
-cd burger-kebab-categories
 
-### 2. Installer les dependances
-composer install
+bash git clone https://github.com/soundous25/burger_kebab.git cd burger_kebab 
+
+### 2. Installer les dépendances
+
+bash composer install 
 
 ### 3. Configurer l'environnement
-cp .env.example .env
-php artisan key:generate
 
-### 4. Base de donnees
-php artisan migrate
-php artisan db:seed
+bash cp .env.example .env php artisan key:generate 
 
-### 5. Lancer le projet
-php artisan serve
+### 4. Configurer la base de données
 
-Ouvrir : http://localhost:8000
+Modifier les paramètres de connexion dans le fichier .env.
+
+Puis exécuter :
+
+bash php artisan migrate php artisan db:seed 
+
+### 5. Lancer l'application
+
+bash php artisan serve 
+
+L'application sera accessible à l'adresse :
+
+text http://127.0.0.1:8000 
 
 ## Structure du projet
-- app/Models/Category.php — Modele
-- app/Http/Controllers/CategoryController.php — Controleur
-- database/migrations/ — Migration table categories
-- database/seeders/CategorySeeder.php — Donnees test
-- resources/views/categories/ — Vues Blade
-- routes/web.php — Routes
+
+### Modèle
+- Category.php : représente la table des catégories et permet les interactions avec la base de données.
+
+### Contrôleur
+- CategoryController.php : gère les opérations CRUD (Créer, Lire, Modifier, Supprimer).
+
+### Base de données
+- Migration categories : création de la table categories.
+- Seeder CategorySeeder : insertion des données de test.
+
+### Vues
+- index.blade.php : affichage de la liste des catégories.
+- create.blade.php : formulaire d'ajout d'une catégorie.
+- edit.blade.php : formulaire de modification d'une catégorie.
+- app.blade.php : template principal de l'application.
+
+### Routes
+- web.php : définition des routes du module catégories.
 
 ## Choix techniques
-- Architecture MVC de Laravel
-- Controller Resource pour CRUD complet
-- Validation Laravel pour sécuriser les formulaires
-- Blade pour les vues dynamiques
-- Seeder pour données de test
-- Git pour suivi des versions
+
+- Utilisation de l'architecture MVC de Laravel.
+- Utilisation d'Eloquent ORM pour la communication avec la base de données.
+- Utilisation des migrations pour gérer la structure de la base de données.
+- Utilisation des Seeders pour générer des données de test.
+- Utilisation de Blade pour les interfaces utilisateur.
+- Utilisation des validations Laravel pour sécuriser les formulaires.
+- Utilisation de Git et GitHub pour le versionnement du projet.
+- Ajout de la recherche et de la pagination pour améliorer l'expérience utilisateur.
